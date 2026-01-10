@@ -149,6 +149,7 @@
         <rocksdbjni.version>9.10.0</rocksdbjni.version>
         <netty.version>4.1.128.Final</netty.version> <!-- to fix CVEs. TODO: remove when fixed in spring-boot-dependencies -->
         <byte-buddy.version>1.17.8</byte-buddy.version>
+        <mockito.version>5.21.0</mockito.version>
     </properties>
 
     <modules>
@@ -1920,6 +1921,18 @@
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy-agent</artifactId>
                 <version>${byte-buddy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
