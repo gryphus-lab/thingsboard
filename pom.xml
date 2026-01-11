@@ -59,7 +59,7 @@
         <milo.version>0.6.12</milo.version>
         <californium.version>3.12.1</californium.version>
         <leshan.version>2.0.0-M15</leshan.version>
-        <mail.version>2.0.1</mail.version>
+        <mail.version>2.0.2</mail.version>
         <curator.version>5.6.0</curator.version>
         <zookeeper.version>3.9.3</zookeeper.version>
         <protobuf.version>3.25.5</protobuf.version> <!-- A Major v4 does not support by the pubsub yet-->
@@ -778,7 +778,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
