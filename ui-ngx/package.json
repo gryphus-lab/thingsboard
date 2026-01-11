@@ -86,7 +86,7 @@
     "split.js": "^1.6.5",
     "systemjs": "6.15.1",
     "tinycolor2": "^1.6.0",
-    "tinymce": "~6.8.5",
+    "tinymce": "~7.2.0",
     "tooltipster": "^4.2.8",
     "tslib": "^2.7.0",
     "typeface-roboto": "^1.1.13",
@@ -137,7 +137,7 @@
   },
   "resolutions": {
     "ace-builds": "1.36.5",
-    "tinymce": "6.8.5",
+    "tinymce": "7.2.0",
     "rollup": "4.22.4",
     "@babel/core": "7.25.2",
     "esbuild": "0.23.0",
