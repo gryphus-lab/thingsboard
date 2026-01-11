@@ -9362,10 +9362,10 @@ tinyexec@^0.3.0:
   resolved "https://registry.yarnpkg.com/tinyexec/-/tinyexec-0.3.0.tgz#ed60cfce19c17799d4a241e06b31b0ec2bee69e6"
   integrity sha512-tVGE0mVJPGb0chKhqmsoosjsS+qUnJVGJpZgsHYQcGoPlG3B51R3PouqTgEGH2Dc9jjFyOqOpix6ZHNMXp1FZg==
 
-tinymce@6.8.5, "tinymce@^7.0.0 || ^6.0.0 || ^5.5.0", tinymce@~6.8.5:
-  version "6.8.5"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.8.5.tgz#aa9a711c4e0b59d506dd281bade857d35a7b3c59"
-  integrity sha512-qAL/FxL7cwZHj4BfaF818zeJJizK9jU5IQzTcSLL4Rj5MaJdiVblEj7aDr80VCV1w9h4Lak9hlnALhq/kVtN1g==
+tinymce@7.2.0, "tinymce@^7.0.0 || ^6.0.0 || ^5.5.0", tinymce@~7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.2.0.tgz#c5015567e742093b43186400c3e7c8394b90cc1f"
+  integrity sha512-R460NlE4REIFuLcZd9mpHK8zRsHdOueLV2m6Wsn0JHfGhDWMcfB1IqUX2QGrSbJga93ygJbJbNMwb2sakFlE/g==
 
 tinyqueue@^3.0.0:
   version "3.0.0"
