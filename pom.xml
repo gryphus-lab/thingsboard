@@ -127,7 +127,7 @@
         <jeasy.version>5.0.0</jeasy.version>
         <!--      BLACKBOX TEST SCOPE     -->
         <testng.version>7.10.1</testng.version>
-        <testcontainers.version>1.20.6</testcontainers.version>
+        <testcontainers.version>1.21.4</testcontainers.version>
         <testcontainers-junit4-mock.version>1.0.2</testcontainers-junit4-mock.version>
         <zeroturnaround.version>1.12</zeroturnaround.version>
         <webdrivermanager.version>6.1.0</webdrivermanager.version>
