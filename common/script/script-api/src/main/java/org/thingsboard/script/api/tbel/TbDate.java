@@ -16,6 +16,7 @@
 package org.thingsboard.script.api.tbel;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 import org.mvel2.ConversionException;
 import org.thingsboard.common.util.JacksonUtil;
 import org.thingsboard.server.common.data.StringUtils;
@@ -39,6 +40,7 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+@Getter
 public class TbDate implements Serializable, Cloneable {
 
     private Instant instant;
@@ -106,12 +108,8 @@ public class TbDate implements Serializable, Cloneable {
     }
 
     public TbDate(int year, int month, int date, int hrs, int min, int second, int milliSecond, String tz) {
-        ZoneId zoneId = tz != null && tz.length() > 0 ? ZoneId.of(tz) : ZoneId.systemDefault();
+        ZoneId zoneId = tz != null && !tz.isEmpty() ? ZoneId.of(tz) : ZoneId.systemDefault();
         instant = parseInstant(year, month, date, hrs, min, second,  milliSecond, zoneId);
-    }
-
-    public Instant getInstant() {
-        return instant;
     }
 
     public ZonedDateTime getZonedDateTime() {
@@ -545,7 +543,7 @@ public class TbDate implements Serializable, Cloneable {
     }
 
     private static Instant parseInstant(String s) {
-        boolean isIsoFormat = s.length() > 0 && Character.isDigit(s.charAt(0));
+        boolean isIsoFormat = !s.isEmpty() && Character.isDigit(s.charAt(0));
         if (isIsoFormat) {
             return getInstant_ISO_OFFSET_DATE_TIME(s);
         } else {
@@ -561,8 +559,7 @@ public class TbDate implements Serializable, Cloneable {
             try {
                 return parseInstant(s, pattern, localeStr, ZoneId.systemDefault().getId());
             } catch (final DateTimeParseException e) {
-                final ConversionException exception = new ConversionException("Cannot parse value [" + s + "] as instant", ex);
-                throw exception;
+                throw new ConversionException("Cannot parse value [" + s + "] as instant", ex);
             }
         }
     }
@@ -620,7 +617,7 @@ public class TbDate implements Serializable, Cloneable {
         Instant instant = Instant.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse(s));
         ZoneId systemZone = ZoneId.systemDefault(); // my timezone
         String id =  systemZone.getRules().getOffset(instant).getId();
-        value =  value.trim() + " " + id.replaceAll(":", "");
+        value =  value.trim() + " " + id.replace(":", "");
         return Instant.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse(value));
     }
 
