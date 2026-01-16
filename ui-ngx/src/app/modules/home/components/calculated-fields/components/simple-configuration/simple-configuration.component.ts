@@ -14,7 +14,7 @@
 /// limitations under the License.
 ///
 
-import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { booleanAttribute, Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -80,6 +80,8 @@ export class SimpleConfigurationComponent implements ControlValueAccessor, Valid
 
   @Input({required: true})
   testScript: () => Observable<string>;
+
+  @Input({transform: booleanAttribute}) isEditValue = true;
 
   simpleConfiguration = this.fb.group({
     arguments: this.fb.control({}),
@@ -153,6 +155,7 @@ export class SimpleConfigurationComponent implements ControlValueAccessor, Valid
     this.simpleConfiguration.patchValue(formValue, {emitEvent: false});
     setTimeout(() => {
       this.simpleConfiguration.get('arguments').updateValueAndValidity({onlySelf: true});
+      this.simpleConfiguration.get('output').updateValueAndValidity({onlySelf: true});
     });
   }
 

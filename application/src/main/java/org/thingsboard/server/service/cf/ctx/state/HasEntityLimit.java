@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.thingsboard.server.common.data.cf.configuration.aggregation;
+package org.thingsboard.server.service.cf.ctx.state;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+public interface HasEntityLimit {
 
-@Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class AggMetric {
-
-    private AggFunction function;
-    private String filter;
-    private AggInput input;
-    private Double defaultValue;
+    default void checkEntityLimit(int currentEntitiesCount, CalculatedFieldCtx ctx) {
+        if (currentEntitiesCount >= ctx.getMaxRelatedEntitiesPerCfArgument()) {
+            throw new IllegalArgumentException(
+                    "Exceeded the maximum allowed related entities per argument '"
+                    + ctx.getMaxRelatedEntitiesPerCfArgument() + "'. Increase the limit in the tenant profile configuration."
+            );
+        }
+    }
 
 }

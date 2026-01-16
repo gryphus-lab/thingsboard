@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.thingsboard.server.common.data.cf.configuration.aggregation;
+:host ::ng-deep {
+  .mat-form-field-appearance-fill {
+    .mat-mdc-form-field-icon-prefix {
+      align-self: baseline;
+    }
+  }
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-
-@Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class AggMetric {
-
-    private AggFunction function;
-    private String filter;
-    private AggInput input;
-    private Double defaultValue;
-
+  .mat-mdc-form-field-icon-prefix {
+    & > * {
+      color: initial;
+      padding-left: 8px;
+    }
+  }
 }
