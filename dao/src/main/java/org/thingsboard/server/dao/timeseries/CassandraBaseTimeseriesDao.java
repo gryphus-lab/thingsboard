@@ -176,8 +176,8 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
     @Override
     public ListenableFuture<Integer> save(TenantId tenantId, EntityId entityId, TsKvEntry tsKvEntry, long ttl) {
         List<ListenableFuture<Void>> futures = new ArrayList<>();
-        ttl = computeTtl(ttl);
-        int dataPointDays = tsKvEntry.getDataPoints() * Math.max(1, (int) (ttl / SECONDS_IN_DAY));
+        int effectiveTtl = computeTtl(ttl);
+        int dataPointDays = tsKvEntry.getDataPoints() * Math.max(1, effectiveTtl / SECONDS_IN_DAY);
         long partition = toPartitionTs(tsKvEntry.getTs());
         String entityType = entityId.getEntityType().name();
         UUID entityIdId = entityId.getId();
@@ -191,23 +191,23 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
             Long longValue = tsKvEntry.getLongValue().orElse(null);
             Double doubleValue = tsKvEntry.getDoubleValue().orElse(null);
             String jsonValue = tsKvEntry.getJsonValue().orElse(null);
-            if (ttl == 0) {
+            if (effectiveTtl == 0) {
                 stmtBuilder = new BoundStatementBuilder(getSaveWithNullStmt()
                         .bind(entityType, entityIdId, entryKey, partition, ts, booleanValue, strValue, longValue, doubleValue, jsonValue));
             } else {
                 stmtBuilder = new BoundStatementBuilder(getSaveWithNullWithTtlStmt()
-                        .bind(entityType, entityIdId, entryKey, partition, ts, booleanValue, strValue, longValue, doubleValue, jsonValue, (int) ttl));
+                        .bind(entityType, entityIdId, entryKey, partition, ts, booleanValue, strValue, longValue, doubleValue, jsonValue, effectiveTtl));
             }
         } else {
-            stmtBuilder = new BoundStatementBuilder((ttl == 0 ? getSaveStmt(type) : getSaveTtlStmt(type)).bind());
+            stmtBuilder = new BoundStatementBuilder((effectiveTtl == 0 ? getSaveStmt(type) : getSaveTtlStmt(type)).bind());
             stmtBuilder.setString(0, entityType)
                     .setUuid(1, entityIdId)
                     .setString(2, entryKey)
                     .setLong(3, partition)
                     .setLong(4, ts);
             addValue(tsKvEntry, stmtBuilder, 5);
-            if (ttl > 0) {
-                stmtBuilder.setInt(6, (int) ttl);
+            if (effectiveTtl > 0) {
+                stmtBuilder.setInt(6, effectiveTtl);
             }
         }
         BoundStatement stmt = stmtBuilder.build();
@@ -535,7 +535,11 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
         }
     }
 
-    private long computeTtl(long ttl) {
+    private int computeTtl(long ttl) {
+        if (ttl < 0) {
+            // Negative TTLs are not allowed; normalize to zero (no TTL)
+            ttl = 0;
+        }
         if (systemTtl > 0) {
             if (ttl == 0) {
                 ttl = systemTtl;
@@ -543,7 +547,11 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
                 ttl = Math.min(systemTtl, ttl);
             }
         }
-        return ttl;
+        if (ttl > Integer.MAX_VALUE) {
+            // Cap TTL to Integer.MAX_VALUE to avoid truncation when binding to Cassandra
+            return Integer.MAX_VALUE;
+        }
+        return (int) ttl;
     }
 
     private void deleteAsync(TenantId tenantId, final QueryCursor cursor, final SimpleListenableFuture<Void> resultFuture) {
