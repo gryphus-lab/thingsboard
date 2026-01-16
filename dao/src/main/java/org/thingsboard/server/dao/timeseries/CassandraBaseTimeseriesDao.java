@@ -536,12 +536,21 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
     }
 
     private long computeTtl(long ttl) {
+        // Normalize negative TTLs to 0 (no per-row TTL)
+        if (ttl < 0) {
+            ttl = 0;
+        }
+        // Apply system-wide TTL limit if configured
         if (systemTtl > 0) {
             if (ttl == 0) {
                 ttl = systemTtl;
             } else {
                 ttl = Math.min(systemTtl, ttl);
             }
+        }
+        // Cassandra TTL is an int; clamp to avoid truncation on cast
+        if (ttl > Integer.MAX_VALUE) {
+            ttl = Integer.MAX_VALUE;
         }
         return ttl;
     }
