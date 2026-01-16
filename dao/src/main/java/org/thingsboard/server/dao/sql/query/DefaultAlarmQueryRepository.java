@@ -171,8 +171,11 @@ public class DefaultAlarmQueryRepository implements AlarmQueryRepository {
                 if ("status".equalsIgnoreCase(sortOrderKey)) {
                     selectPart.append(", a.status as status ");
                 }
-                sortPart.append(alarmFieldColumnMap.getOrDefault(sortOrderKey, sortOrderKey))
-                        .append(" ").append(sortOrder.getDirection().name());
+                String sortColumn = alarmFieldColumnMap.get(sortOrderKey);
+                if (sortColumn != null) {
+                    sortPart.append(sortColumn)
+                            .append(" ").append(sortOrder.getDirection().name());
+                }
                 if (pageLink.isSearchPropagatedAlarms()) {
                     wherePart.append(" and ea.entity_id in (:entity_ids)");
                 } else {
