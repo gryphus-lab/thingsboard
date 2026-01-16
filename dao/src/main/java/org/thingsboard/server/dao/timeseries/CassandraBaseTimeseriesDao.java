@@ -177,7 +177,7 @@ public class CassandraBaseTimeseriesDao extends AbstractCassandraBaseTimeseriesD
     public ListenableFuture<Integer> save(TenantId tenantId, EntityId entityId, TsKvEntry tsKvEntry, long ttl) {
         List<ListenableFuture<Void>> futures = new ArrayList<>();
         int effectiveTtl = computeTtl(ttl);
-        int dataPointDays = tsKvEntry.getDataPoints() * Math.max(1, effectiveTtl / SECONDS_IN_DAY);
+        int dataPointDays = Math.toIntExact(tsKvEntry.getDataPoints() * Math.max(1, effectiveTtl / SECONDS_IN_DAY));
         long partition = toPartitionTs(tsKvEntry.getTs());
         String entityType = entityId.getEntityType().name();
         UUID entityIdId = entityId.getId();
