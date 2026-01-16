@@ -209,18 +209,27 @@ window.initSender = function initSender() {
 var main = window.main = null;
 var sender = window.sender = null;
 
+// Explicit map of allowed global commands that may be invoked via messages.
+// Populate this object with any globally available command functions
+// that should be callable from the outside.
+var windowCommands = {};
+
 window.onmessage = function(e) {
     var msg = e.data;
     if (msg.event && sender) {
         sender._signal(msg.event, msg.data);
     }
     else if (msg.command) {
-        if (main[msg.command])
+        if (main && typeof main[msg.command] === "function") {
             main[msg.command].apply(main, msg.args);
-        else if (window[msg.command])
-            window[msg.command].apply(window, msg.args);
-        else
+        }
+        else if (Object.prototype.hasOwnProperty.call(windowCommands, msg.command) &&
+                 typeof windowCommands[msg.command] === "function") {
+            windowCommands[msg.command].apply(window, msg.args);
+        }
+        else {
             throw new Error("Unknown command:" + msg.command);
+        }
     }
     else if (msg.init) {
         window.initBaseUrls(msg.tlns);
