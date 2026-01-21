@@ -48,7 +48,7 @@ public class TransportSecurityConfiguration {
                 .securityMatcher(AntPathRequestMatcher.antMatcher(DEVICE_API_ENTRY_POINT))
                 .cors(cors -> {
                 })
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(DEVICE_API_ENTRY_POINT)))
                 .authorizeHttpRequests(config -> config
                         .requestMatchers(DEVICE_API_ENTRY_POINT).permitAll())
                 .addFilterBefore(transportPayloadSizeFilter(), UsernamePasswordAuthenticationFilter.class);
