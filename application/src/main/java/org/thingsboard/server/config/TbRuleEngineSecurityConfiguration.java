@@ -39,7 +39,7 @@ public class TbRuleEngineSecurityConfiguration {
                         .cacheControl(config -> {})
                         .frameOptions(config -> {}).disable())
                 .cors(cors -> {})
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> {})
                 .authorizeHttpRequests(config -> config
                         .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated());
