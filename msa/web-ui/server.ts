@@ -24,6 +24,7 @@ import compression from 'compression';
 import historyApiFallback from 'connect-history-api-fallback';
 import { Socket } from 'net';
 import { RequestHandler } from 'serve-static';
+import rateLimit from 'express-rate-limit';
 
 const logger = _logger('main');
 
@@ -59,6 +60,13 @@ let connections: Socket[] = [];
 
         const app = express();
         server = http.createServer(app);
+
+        const indexHtmlRateLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100, // limit each IP to 100 requests per window
+            standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+            legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+        });
 
         let apiProxy: httpProxy;
         if (useApiProxy) {
@@ -112,7 +120,7 @@ let connections: Socket[] = [];
           /^\/resources\/scada-symbols\/(?:system|tenant)\/[^/]+$/
         ];
 
-        app.use(indexHtmlFallbackPaths, indexHtmlFallback);
+        app.use(indexHtmlFallbackPaths, indexHtmlRateLimiter, indexHtmlFallback);
 
         server.listen(bindPort, bindAddress, () => {
             logger.info('==> 🌎  Listening on port %s.', bindPort);
