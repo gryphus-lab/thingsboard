@@ -53,10 +53,11 @@ public class DefaultEdgeUpgradeInstructionsService extends BaseEdgeInstallUpgrad
     @Override
     public EdgeInstructions getUpgradeInstructions(String edgeVersion, String upgradeMethod) {
         String currentEdgeVersion = convertEdgeVersionToDocsFormat(edgeVersion);
-        return switch (upgradeMethod.toLowerCase()) {
+        String normalizedUpgradeMethod = upgradeMethod.toLowerCase();
+        return switch (normalizedUpgradeMethod) {
             case "docker" -> getDockerUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion);
             case "ubuntu", "centos" ->
-                    getLinuxUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion, upgradeMethod.toLowerCase());
+                    getLinuxUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion, normalizedUpgradeMethod);
             default -> throw new IllegalArgumentException("Unsupported upgrade method for Edge: " + upgradeMethod);
         };
     }
