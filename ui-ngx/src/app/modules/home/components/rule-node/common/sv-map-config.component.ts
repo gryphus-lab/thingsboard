@@ -210,7 +210,7 @@ export class SvMapConfigComponent extends PageComponent implements ControlValueA
   public addKeyVal() {
     this.keyValsFormArray().push(this.fb.group({
       key: ['', [Validators.required]],
-      value: ['', [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]]
+      value: ['', [Validators.required, Validators.pattern(/.*\S(&:.|\s)*/)]]
     }));
     this.keyChangeSubscribe(this.keyValsFormArray().at(this.keyValsFormArray().length - 1) as FormGroup);
   }
