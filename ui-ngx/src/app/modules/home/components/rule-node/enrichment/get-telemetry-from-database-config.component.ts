@@ -172,9 +172,9 @@ export class GetTelemetryFromDatabaseConfigComponent extends RuleNodeConfigurati
       this.getTelemetryFromDatabaseConfigForm.get('interval.endIntervalTimeUnit').setValidators([]);
       this.getTelemetryFromDatabaseConfigForm.get('interval').setValidators([]);
       this.getTelemetryFromDatabaseConfigForm.get('startIntervalPattern').setValidators([Validators.required,
-        Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]);
+        Validators.pattern(/\S/)]);
       this.getTelemetryFromDatabaseConfigForm.get('endIntervalPattern').setValidators([Validators.required,
-        Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]);
+        Validators.pattern(/\S/)]);
     } else {
       this.getTelemetryFromDatabaseConfigForm.get('interval.startInterval').setValidators([Validators.required,
         Validators.min(1), Validators.max(2147483647)]);
