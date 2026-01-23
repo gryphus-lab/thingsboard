@@ -53,6 +53,9 @@ public class DefaultEdgeUpgradeInstructionsService extends BaseEdgeInstallUpgrad
     @Override
     public EdgeInstructions getUpgradeInstructions(String edgeVersion, String upgradeMethod) {
         String currentEdgeVersion = convertEdgeVersionToDocsFormat(edgeVersion);
+        if (upgradeMethod == null) {
+            throw new IllegalArgumentException("Upgrade method for Edge must not be null");
+        }
         String normalizedUpgradeMethod = upgradeMethod.toLowerCase();
         return switch (normalizedUpgradeMethod) {
             case "docker" -> getDockerUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion);
