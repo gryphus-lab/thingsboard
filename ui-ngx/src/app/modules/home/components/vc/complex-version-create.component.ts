@@ -84,7 +84,7 @@ export class ComplexVersionCreateComponent extends PageComponent implements OnIn
   ngOnInit(): void {
     this.createVersionFormGroup = this.fb.group({
       branch: [this.branch, [Validators.required]],
-      versionName: [null, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]],
+      versionName: [null, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)]],
       syncStrategy: [SyncStrategy.MERGE, Validators.required],
       entityTypes: [createDefaultEntityTypesVersionCreate(), []],
     });
