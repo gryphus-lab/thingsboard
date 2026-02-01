@@ -867,6 +867,41 @@ export function generateSecret(length?: number): string {
   if (isUndefined(length) || length == null) {
     length = 1;
   }
+  // Ensure non-negative integer length
+  length = Math.floor(length);
+  if (length < 1) {
+    length = 1;
+  }
+
+  // Prefer cryptographically secure randomness when available
+  const cryptoObj: Crypto | undefined = (typeof window !== 'undefined' ? (window.crypto || (window as any).msCrypto) : undefined);
+
+  if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
+    const chars = alphanumericCharacters;
+    const charsLen = alphanumericCharactersLength;
+    const result: string[] = [];
+    const buffer = new Uint8Array(length);
+
+    // We may need to refill the buffer if we reject too many bytes
+    let generated = 0;
+    while (generated < length) {
+      cryptoObj.getRandomValues(buffer);
+      for (let i = 0; i < buffer.length && generated < length; i++) {
+        const randomByte = buffer[i];
+        // Avoid modulo bias by rejecting out-of-range values
+        const maxUnbiased = 256 - (256 % charsLen);
+        if (randomByte < maxUnbiased) {
+          const charIndex = randomByte % charsLen;
+          result.push(chars.charAt(charIndex));
+          generated++;
+        }
+      }
+    }
+
+    return result.join('');
+  }
+
+  // Fallback for environments without crypto.getRandomValues (not recommended for production)
   const l = length > 10 ? 10 : length;
   const str = Math.random().toString(36).substr(2, l);
   if (str.length >= length) {
