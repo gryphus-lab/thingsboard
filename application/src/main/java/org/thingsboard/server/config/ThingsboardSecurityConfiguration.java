@@ -246,7 +246,11 @@ public class ThingsboardSecurityConfiguration {
         http.headers(headers -> headers.defaultsDisabled()
                         .crossOriginOpenerPolicy(coop -> coop.policy(CrossOriginOpenerPolicy.SAME_ORIGIN)))
                 .cors(cors -> {})
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                TOKEN_BASED_AUTH_ENTRY_POINT,
+                                TOKEN_REFRESH_ENTRY_POINT,
+                                WS_ENTRY_POINT))
                 .exceptionHandling(config -> {})
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(config -> config

@@ -369,7 +369,7 @@ export class UtilsService {
       newParam = name + '=' + value;
     }
     if (urlQueryString) {
-      const keyRegex = new RegExp('([\?&])' + name + '[^&]*');
+      const keyRegex = new RegExp('([?&])' + name + '[^&]*');
       if (urlQueryString.match(keyRegex) !== null) {
         if (newParam) {
           newParam = '$1' + newParam;
