@@ -42,8 +42,8 @@ export class CalculateDeltaConfigComponent extends RuleNodeConfigurationComponen
 
   protected onConfigurationSet(configuration: RuleNodeConfiguration) {
     this.calculateDeltaConfigForm = this.fb.group({
-      inputValueKey: [configuration.inputValueKey, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]],
-      outputValueKey: [configuration.outputValueKey, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]],
+      inputValueKey: [configuration.inputValueKey, [Validators.required, Validators.pattern(/^\s*\S[\s\S]*$/)]],
+      outputValueKey: [configuration.outputValueKey, [Validators.required, Validators.pattern(/^\s*\S[\s\S]*$/)]],
       useCache: [configuration.useCache, []],
       addPeriodBetweenMsgs: [configuration.addPeriodBetweenMsgs, []],
       periodValueKey: [configuration.periodValueKey, []],
