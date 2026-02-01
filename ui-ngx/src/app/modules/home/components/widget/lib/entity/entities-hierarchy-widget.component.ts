@@ -367,7 +367,7 @@ export class EntitiesHierarchyWidgetComponent extends PageComponent implements O
   private prepareNodeText(node: HierarchyNavTreeNode): string {
     const nodeIcon = this.prepareNodeIcon(node.data.nodeCtx);
     const nodeText = this.nodeTextFunction(this.ctx, node.data.nodeCtx);
-    node.data.searchText = nodeText ? nodeText.replace(/<[^>]+>/g, '').toLowerCase() : '';
+    node.data.searchText = nodeText ? nodeText.replace(/[<>]/g, '').toLowerCase() : '';
     return nodeIcon + nodeText;
   }
 
