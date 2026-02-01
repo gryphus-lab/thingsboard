@@ -64,6 +64,18 @@ window.normalizeModule = function(parentId, moduleName) {
     return moduleName;
 };
 
+// Ensure require.modules is a prototype-less object to avoid prototype pollution
+if (!window.require) {
+    window.require = {};
+}
+if (!window.require.modules) {
+    window.require.modules = Object.create(null);
+}
+
+function isUnsafeModuleId(id) {
+    return id === "__proto__" || id === "constructor" || id === "prototype";
+}
+
 window.require = function require(parentId, id) {
     if (!id) {
         id = parentId;
@@ -73,6 +85,10 @@ window.require = function require(parentId, id) {
         throw new Error("worker.js require() accepts only (parentId, id) as arguments");
 
     id = window.normalizeModule(parentId, id);
+
+    if (isUnsafeModuleId(id)) {
+        throw new Error("Invalid module id: " + id);
+    }
 
     var module = window.require.modules[id];
     if (module) {
