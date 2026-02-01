@@ -234,7 +234,13 @@ window.onmessage = function(e) {
     else if (msg.init) {
         window.initBaseUrls(msg.tlns);
         sender = window.sender = window.initSender();
-        var clazz = require(msg.module)[msg.classname];
+        var moduleExports = require(msg.module);
+        if (!moduleExports ||
+            !Object.prototype.hasOwnProperty.call(moduleExports, msg.classname) ||
+            typeof moduleExports[msg.classname] !== "function") {
+            throw new Error("Unknown or invalid class: " + msg.classname + " in module: " + msg.module);
+        }
+        var clazz = moduleExports[msg.classname];
         main = window.main = new clazz(sender);
     }
 };
