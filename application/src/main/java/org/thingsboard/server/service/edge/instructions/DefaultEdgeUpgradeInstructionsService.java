@@ -59,8 +59,10 @@ public class DefaultEdgeUpgradeInstructionsService extends BaseEdgeInstallUpgrad
         String normalizedUpgradeMethod = upgradeMethod.toLowerCase();
         return switch (normalizedUpgradeMethod) {
             case "docker" -> getDockerUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion);
-            case "ubuntu", "centos" ->
-                    getLinuxUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion, normalizedUpgradeMethod);
+            case "ubuntu" ->
+                    getLinuxUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion, "ubuntu", "ubuntu");
+            case "centos" ->
+                    getLinuxUpgradeInstructions(this.platformEdgeVersion, currentEdgeVersion, "centos", "centos");
             default -> throw new IllegalArgumentException("Unsupported upgrade method for Edge: " + upgradeMethod);
         };
     }
@@ -127,7 +129,7 @@ public class DefaultEdgeUpgradeInstructionsService extends BaseEdgeInstallUpgrad
         return new EdgeInstructions(result.toString());
     }
 
-    private EdgeInstructions getLinuxUpgradeInstructions(String platformEdgeVersion, String currentEdgeVersion, String os) {
+    private EdgeInstructions getLinuxUpgradeInstructions(String platformEdgeVersion, String currentEdgeVersion, String os, String osDir) {
         EdgeUpgradeInfo edgeUpgradeInfo = upgradeVersionHashMap.get(currentEdgeVersion);
         if (edgeUpgradeInfo == null || edgeUpgradeInfo.getNextEdgeVersion() == null || platformEdgeVersion.equals(currentEdgeVersion)) {
             return new EdgeInstructions("Edge upgrade instruction for " + currentEdgeVersion + "EDGE is not available.");
@@ -137,7 +139,7 @@ public class DefaultEdgeUpgradeInstructionsService extends BaseEdgeInstallUpgrad
         StringBuilder result = new StringBuilder(upgrade_preparing);
         while (edgeUpgradeInfo.getNextEdgeVersion() != null && !platformEdgeVersion.equals(currentEdgeVersion)) {
             String edgeVersion = edgeUpgradeInfo.getNextEdgeVersion();
-            String linuxUpgradeInstructions = readFile(resolveFile(os, "instructions.md"));
+            String linuxUpgradeInstructions = readFile(resolveFile(osDir, "instructions.md"));
             if (edgeUpgradeInfo.isRequiresUpdateDb()) {
                 String upgradeDb = readFile(resolveFile("upgrade_db.md"));
                 linuxUpgradeInstructions = linuxUpgradeInstructions.replace("${UPGRADE_DB}", upgradeDb);
