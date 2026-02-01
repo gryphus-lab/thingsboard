@@ -57,7 +57,19 @@ public abstract class BaseEdgeInstallUpgradeInstructionsService {
     }
 
     protected Path resolveFile(String subDir, String... subDirs) {
-        return getEdgeInstructionsDir().resolve(Paths.get(subDir, subDirs));
+        if (subDir == null || subDir.isBlank()) {
+            throw new IllegalArgumentException("Subdirectory name must not be null or blank");
+        }
+        // Ensure that subDir is a single, simple path segment without traversal or separators
+        if (subDir.contains("..") || subDir.contains("/") || subDir.contains("\\")) {
+            throw new IllegalArgumentException("Invalid subdirectory name: " + subDir);
+        }
+        Path baseDir = getEdgeInstructionsDir().toAbsolutePath().normalize();
+        Path resolved = baseDir.resolve(Paths.get(subDir, subDirs)).normalize();
+        if (!resolved.startsWith(baseDir)) {
+            throw new IllegalArgumentException("Resolved path escapes the edge instructions directory");
+        }
+        return resolved;
     }
 
     protected Path getEdgeInstructionsDir() {
