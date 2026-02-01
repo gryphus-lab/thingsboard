@@ -334,7 +334,7 @@ export class UtilsService {
   }
 
   public getQueryParam(name: string, url = this.window.location.href): string {
-    name = name.replace(/[\[\]]/g, '\\$&');
+    name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
     const results = regex.exec(url);
     if (!results) {
