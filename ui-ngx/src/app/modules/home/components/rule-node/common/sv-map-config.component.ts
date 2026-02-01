@@ -173,7 +173,7 @@ export class SvMapConfigComponent extends PageComponent implements ControlValueA
       keyValuesData.forEach(data => {
         keyValsControls.push(this.fb.group({
           key: [data.key, [Validators.required, ]],
-          value: [data.value, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]]
+          value: [data.value, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)]]
         }));
       });
       this.svListFormGroup.setControl('keyVals', this.fb.array(keyValsControls, this.propagateNestedErrors), {emitEvent: false});
