@@ -72,9 +72,10 @@ import { FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'tb-entities-hierarchy-widget',
-  templateUrl: './entities-hierarchy-widget.component.html',
-  styleUrls: ['./entities-hierarchy-widget.component.scss']
+    selector: 'tb-entities-hierarchy-widget',
+    templateUrl: './entities-hierarchy-widget.component.html',
+    styleUrls: ['./entities-hierarchy-widget.component.scss'],
+    standalone: false
 })
 export class EntitiesHierarchyWidgetComponent extends PageComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -367,7 +368,7 @@ export class EntitiesHierarchyWidgetComponent extends PageComponent implements O
   private prepareNodeText(node: HierarchyNavTreeNode): string {
     const nodeIcon = this.prepareNodeIcon(node.data.nodeCtx);
     const nodeText = this.nodeTextFunction(this.ctx, node.data.nodeCtx);
-    node.data.searchText = nodeText ? nodeText.replace(/<[^>]+>/g, '').toLowerCase() : '';
+    node.data.searchText = nodeText ? nodeText.replace(/[<>]/g, '').toLowerCase() : '';
     return nodeIcon + nodeText;
   }
 

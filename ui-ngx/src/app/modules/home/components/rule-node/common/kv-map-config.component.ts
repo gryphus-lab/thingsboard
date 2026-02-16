@@ -34,21 +34,22 @@ import { isEqual } from '@core/public-api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'tb-kv-map-config',
-  templateUrl: './kv-map-config.component.html',
-  styleUrls: ['./kv-map-config.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => KvMapConfigComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => KvMapConfigComponent),
-      multi: true,
-    }
-  ]
+    selector: 'tb-kv-map-config',
+    templateUrl: './kv-map-config.component.html',
+    styleUrls: ['./kv-map-config.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => KvMapConfigComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => KvMapConfigComponent),
+            multi: true,
+        }
+    ],
+    standalone: false
 })
 export class KvMapConfigComponent implements ControlValueAccessor, OnInit, Validator {
 
@@ -177,8 +178,8 @@ export class KvMapConfigComponent implements ControlValueAccessor, OnInit, Valid
       const keyValsControls: Array<FormGroup> = [];
       keyValuesData.forEach(data => {
         keyValsControls.push(this.fb.group({
-          key: [data.key, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]],
-          value: [data.value, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]]
+          key: [data.key, [Validators.required, Validators.pattern(/[\s\S]*\S(?:&:[\s\S]*)?/)]],
+          value: [data.value, [Validators.required, Validators.pattern(/[\s\S]*\S(?:&:[\s\S]*)?/)]]
         }, {validators: this.uniqueKeyValuePairValidator ? [this.duplicateValuesValidator] : []}));
       });
       this.kvListFormGroup.setControl('keyVals', this.fb.array(keyValsControls, this.propagateNestedErrors), {emitEvent: false});
@@ -191,8 +192,8 @@ export class KvMapConfigComponent implements ControlValueAccessor, OnInit, Valid
 
   public addKeyVal() {
     this.keyValsFormArray().push(this.fb.group({
-      key: ['', [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]],
-      value: ['', [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]]
+      key: ['', [Validators.required, Validators.pattern(/[\s\S]*\S(?:&:[\s\S]*)?/)]],
+      value: ['', [Validators.required, Validators.pattern(/[\s\S]*\S(?:&:[\s\S]*)?/)]]
     }, {validators: this.uniqueKeyValuePairValidator ? [this.duplicateValuesValidator] : []}));
   }
 

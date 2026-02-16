@@ -36,21 +36,22 @@ import { OriginatorFieldsMappingValues, SvMapOption } from '../rule-node-config.
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'tb-sv-map-config',
-  templateUrl: './sv-map-config.component.html',
-  styleUrls: ['./sv-map-config.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SvMapConfigComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => SvMapConfigComponent),
-      multi: true,
-    }
-  ]
+    selector: 'tb-sv-map-config',
+    templateUrl: './sv-map-config.component.html',
+    styleUrls: ['./sv-map-config.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SvMapConfigComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => SvMapConfigComponent),
+            multi: true,
+        }
+    ],
+    standalone: false
 })
 export class SvMapConfigComponent extends PageComponent implements ControlValueAccessor, OnInit, Validator {
 
@@ -173,7 +174,7 @@ export class SvMapConfigComponent extends PageComponent implements ControlValueA
       keyValuesData.forEach(data => {
         keyValsControls.push(this.fb.group({
           key: [data.key, [Validators.required, ]],
-          value: [data.value, [Validators.required, Validators.pattern(/(?:.|\s)*\S(&:.|\s)*/)]]
+          value: [data.value, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)]]
         }));
       });
       this.svListFormGroup.setControl('keyVals', this.fb.array(keyValsControls, this.propagateNestedErrors), {emitEvent: false});
