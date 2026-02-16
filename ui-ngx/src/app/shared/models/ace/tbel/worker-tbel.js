@@ -76,6 +76,39 @@ function isUnsafeModuleId(id) {
     return id === "__proto__" || id === "constructor" || id === "prototype";
 }
 
+// Allow-list or pattern-based validation for module identifiers that may be loaded.
+// This should be kept in sync with the set of modules that are expected to be used
+// inside this worker.
+function isAllowedModuleId(id) {
+    // Example policy: only allow ace modules, and disallow any obvious traversal.
+    if (typeof id !== "string") {
+        return false;
+    }
+    if (id.indexOf("..") !== -1) {
+        return false;
+    }
+    // Restrict to known namespaces; extend this as needed.
+    return id === "ace/lib/event_emitter" ||
+           id === "ace/lib/oop" ||
+           id.indexOf("ace/") === 0;
+}
+
+function isSafeScriptPath(path) {
+    if (typeof path !== "string") {
+        return false;
+    }
+    var trimmed = path.trim();
+    // Disallow absolute URLs and protocol-relative URLs
+    if (/^(?:[a-zA-Z][a-zA-Z0-9+\-.]*:|\/\/)/.test(trimmed)) {
+        return false;
+    }
+    // Disallow parent-directory traversal segments
+    if (trimmed.indexOf("..") !== -1) {
+        return false;
+    }
+    return true;
+}
+
 window.require = function require(parentId, id) {
     if (!id) {
         id = parentId;
@@ -88,6 +121,10 @@ window.require = function require(parentId, id) {
 
     if (isUnsafeModuleId(id)) {
         throw new Error("Invalid module id: " + id);
+    }
+
+    if (!isAllowedModuleId(id)) {
+        throw new Error("Disallowed module id: " + id);
     }
 
     var module = window.require.modules[id];
@@ -104,6 +141,10 @@ window.require = function require(parentId, id) {
 
     var path = resolveModuleId(id, window.require.tlns);
     if (path.slice(-3) != ".js") path += ".js";
+
+    if (!isSafeScriptPath(path)) {
+        throw new Error("Refusing to load script from unsafe path: " + path);
+    }
 
     window.require.id = id;
     window.require.modules[id] = {}; // prevent infinite loop on broken modules
