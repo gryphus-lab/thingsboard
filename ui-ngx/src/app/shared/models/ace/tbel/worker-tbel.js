@@ -225,6 +225,14 @@ window.initSender = function initSender() {
 var main = window.main = null;
 var sender = window.sender = null;
 
+// Explicit map of allowed worker classes that may be instantiated via messages.
+// Populate this object with any constructor functions that are safe to expose.
+// Example:
+// var ALLOWED_WORKER_CLASSES = {
+//     "SomeWorkerClass": SomeWorkerClassConstructor
+// };
+var ALLOWED_WORKER_CLASSES = {};
+
 // Explicit map of allowed global commands that may be invoked via messages.
 // Populate this object with any globally available command functions
 // that should be callable from the outside.
@@ -256,7 +264,12 @@ window.onmessage = function(e) {
             typeof moduleExports[msg.classname] !== "function") {
             throw new Error("Unknown or invalid class: " + msg.classname + " in module: " + msg.module);
         }
-        var clazz = moduleExports[msg.classname];
+        // Validate that the requested classname is explicitly allowed before instantiation.
+        if (!Object.prototype.hasOwnProperty.call(ALLOWED_WORKER_CLASSES, msg.classname) ||
+            typeof ALLOWED_WORKER_CLASSES[msg.classname] !== "function") {
+            throw new Error("Unsupported worker class: " + msg.classname);
+        }
+        var clazz = ALLOWED_WORKER_CLASSES[msg.classname];
         main = window.main = new clazz(sender);
     }
 };
