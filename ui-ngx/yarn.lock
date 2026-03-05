@@ -422,10 +422,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@20.3.16":
-  version "20.3.16"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-20.3.16.tgz#c30038600e190ece0fa38452ef729e7b46416897"
-  integrity sha512-KSFPKvOmWWLCJBbEO+CuRUXfecX2FRuO0jNi9c54ptXMOPHlK1lIojUnyXmMNzjdHgRug8ci9qDuftvC2B7MKg==
+"@angular/core@20.3.17":
+  version "20.3.17"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-20.3.17.tgz#e396f0f2a6f47a85524e8d313082f65e35001059"
+  integrity sha512-YlQqxMeHI9XJw7I7oM3hYFQd4lQbK37IdlD9ztROIw5FjX6i6lmLU7+X1MQGSRi2r+X9l3IZtl33hRTNvkoUBw==
   dependencies:
     tslib "^2.3.0"
 
@@ -1607,9 +1607,9 @@
     polyclip-ts "^0.16.5"
 
 "@hono/node-server@^1.19.7":
-  version "1.19.9"
-  resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.19.9.tgz#8f37119b1acf283fd3f6035f3d1356fdb97a09ac"
-  integrity sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==
+  version "1.19.11"
+  resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.19.11.tgz#dc419f0826dd2504e9fc86ad289d5636a0444e2f"
+  integrity sha512-dr8/3zEaB+p0D2n/IUrlPF1HZm586qgJNXK1a9fhg/PzdtkK7Ksd5l312tJX2yBuALqDYBlG20QEbayqPyxn+g==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
@@ -10405,10 +10405,10 @@ tinymce@6.8.6, "tinymce@^7.0.0 || ^6.0.0 || ^5.5.0":
   resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.8.6.tgz#799e4f03eeb4399399dfdeb12ba17b3b91887adf"
   integrity sha512-++XYEs8lKWvZxDCjrr8Baiw7KiikraZ5JkLMg6EdnUVNKJui0IsrAADj5MsyUeFkcEryfn2jd3p09H7REvewyg==
 
-tinymce@~7.0.0:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.0.1.tgz#743f4003027a13497654a5ce5ca74793815386f7"
-  integrity sha512-0a7DJnhniBx2psRuKcVQ9g4hujN6PAR4fPS0NSF1T1luH1RBDZVVEn2pGND6Ly+AW1lUm/cHOHjsasqBelMhbw==
+tinymce@~7.2.0:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.2.1.tgz#9b4f6b5a0fa647e2953c174ac69aa47483683332"
+  integrity sha512-ADd1cvdIuq6NWyii0ZOZRuu+9sHIdQfcRNWBcBps2K8vy7OjlRkX6iw7zz1WlL9kY4z4L1DvIP+xOrVX/46aHA==
 
 tinyqueue@^3.0.0:
   version "3.0.0"
