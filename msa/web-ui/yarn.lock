@@ -706,12 +706,12 @@ expand-template@^2.0.3:
   resolved "https://registry.yarnpkg.com/expand-template/-/expand-template-2.0.3.tgz#6e14b3fcee0f3a6340ecb57d2e8918692052a47c"
   integrity sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==
 
-express-rate-limit@^8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-8.2.1.tgz#ec75fdfe280ecddd762b8da8784c61bae47d7f7f"
-  integrity sha512-PCZEIEIxqwhzw4KF0n7QF4QqruVTcF73O5kFKUnGOyjbCCgizBBiFaYpd/fnBLUMPw/BWw9OsiN7GgrNYr7j6g==
+express-rate-limit@^8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-8.2.2.tgz#dc1fc33482ab63cc8f6bcf473f2c93ad9b46e261"
+  integrity sha512-Ybv7bqtOgA914MLwaHWVFXMpMYeR1MQu/D+z2MaLYteqBsTIp9sY3AU7mGNLMJv8eLg8uQMpE20I+L2Lv49nSg==
   dependencies:
-    ip-address "10.0.1"
+    ip-address "10.1.0"
 
 express@^5.1.0:
   version "5.1.0"
@@ -981,10 +981,10 @@ into-stream@^6.0.0:
     from2 "^2.3.0"
     p-is-promise "^3.0.0"
 
-ip-address@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.0.1.tgz#a8180b783ce7788777d796286d61bce4276818ed"
-  integrity sha512-NWv9YLW4PoW2B7xtzaS3NCot75m6nK7Icdv0o3lfMceJVRfSoQwqD4wEH5rLwoKJwUiZ/rfpiVBhnaF0FK4HoA==
+ip-address@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.1.0.tgz#d8dcffb34d0e02eb241427444a6e23f5b0595aa4"
+  integrity sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==
 
 ipaddr.js@1.9.1:
   version "1.9.1"
@@ -1661,9 +1661,9 @@ tar-stream@^2.1.4:
     readable-stream "^3.1.1"
 
 tar@^7.4.3:
-  version "7.5.9"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.9.tgz#817ac12a54bc4362c51340875b8985d7dc9724b8"
-  integrity sha512-BTLcK0xsDh2+PUe9F6c2TlRp4zOOBMTkoQHQIWSIzI0R7KG46uEwq4OPk2W7bZcprBMsuaeFsqwYr7pjh6CuHg==
+  version "7.5.11"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.11.tgz#1250fae45d98806b36d703b30973fa8e0a6d8868"
+  integrity sha512-ChjMH33/KetonMTAtpYdgUFr0tbz69Fp2v7zWxQfYZX4g5ZN2nOBXm1R2xyA+lMIKrLKIoKAwFj93jE/avX9cQ==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"
